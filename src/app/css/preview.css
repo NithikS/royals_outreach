@@ -1,0 +1,264 @@
+/* ================= Component preview page (/preview) ================= */
+
+.preview-page {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: var(--space-8);
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6) var(--space-16);
+  font-family: var(--font-sans);
+}
+
+@media (max-width: 1024px) {
+  .preview-page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .preview-page {
+    padding: var(--space-5) var(--space-4) var(--space-12);
+  }
+}
+
+/* Index */
+.preview-index {
+  position: sticky;
+  top: var(--space-6);
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding-right: var(--space-2);
+}
+
+@media (max-width: 1024px) {
+  .preview-index {
+    display: none;
+  }
+}
+
+.preview-index-group {
+  margin-bottom: var(--space-5);
+}
+
+.preview-index-label {
+  margin-bottom: var(--space-1);
+  color: var(--secondaryGray);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--tracking-section);
+  text-transform: uppercase;
+}
+
+.preview-index-link {
+  display: block;
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-input);
+  font-size: 0.9rem;
+}
+
+.preview-index-link:hover {
+  background: var(--blueHover);
+}
+
+/* Main */
+.preview-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.preview-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Card */
+.preview-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border: var(--border-card) solid var(--secondarySilver);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  scroll-margin-top: var(--space-6);
+}
+
+@media (max-width: 600px) {
+  .preview-card {
+    padding: var(--space-4);
+  }
+}
+
+.preview-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+}
+
+.preview-card-name {
+  margin: 0;
+  color: var(--primaryBlue);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+}
+
+.preview-card-file {
+  color: var(--secondaryGray);
+  font-size: 0.85rem;
+}
+
+.preview-card-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: var(--space-6);
+}
+
+@media (max-width: 900px) {
+  .preview-card-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.preview-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  color: var(--primaryRed);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--tracking-section);
+  text-transform: uppercase;
+}
+
+.preview-label-example {
+  color: var(--secondaryGray);
+}
+
+.preview-pages {
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--textBlack);
+  font-size: var(--fs-sm);
+}
+
+.preview-pages li + li {
+  margin-top: var(--space-1);
+}
+
+.preview-note {
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-left: var(--border-input) solid var(--primaryBlue);
+  background: var(--blueTint);
+  color: var(--textBlack);
+  font-size: 0.85rem;
+}
+
+.preview-props {
+  min-width: 0;
+}
+
+.preview-code {
+  max-height: 360px;
+  margin: 0;
+  padding: var(--space-4);
+  overflow: auto;
+  border-radius: var(--radius-button);
+  background: var(--navy);
+  color: var(--white);
+  font-size: 12.5px;
+  line-height: 1.55;
+  white-space: pre;
+}
+
+/* Live preview */
+.preview-stage {
+  padding: var(--space-6);
+  overflow-x: auto;
+  border: var(--border-cell) dashed var(--secondarySilver);
+  border-radius: var(--radius-card);
+  background: var(--white);
+}
+
+@media (max-width: 600px) {
+  .preview-stage {
+    padding: var(--space-3);
+  }
+}
+
+.preview-inline {
+  min-width: 0;
+}
+
+.preview-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Fixed-position components: a transform makes this box their containing block */
+.preview-frame-nav,
+.preview-frame-mobile {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  background: var(--disabledSurface);
+}
+
+.preview-frame-nav {
+  height: 640px;
+  border-radius: var(--radius-card);
+}
+
+.preview-frame-nav .side-nav {
+  height: 100%;
+}
+
+.preview-frame-page {
+  padding: var(--space-6);
+  color: var(--secondaryGray);
+  font-size: 0.85rem;
+}
+
+.preview-frame-nav .preview-frame-page {
+  margin-left: var(--sidenav-width);
+}
+
+@media (max-width: 1024px) {
+  .preview-frame-nav .preview-frame-page {
+    margin-left: var(--sidenav-compact-width);
+  }
+}
+
+.preview-frame-mobile {
+  width: 390px;
+  max-width: 100%;
+  height: 640px;
+  margin: 0 auto;
+  border: var(--border-frame) solid var(--navy);
+  border-radius: 24px;
+}
+
+/* Force the phone-only navs on inside the phone frame */
+.preview-frame-mobile .mobile-nav {
+  display: block;
+  position: relative;
+}
+
+.preview-frame-mobile .bottom-nav {
+  display: flex;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--white);
+  border-top: var(--border-input) solid var(--secondarySilver);
+  font-family: var(--font-sans);
+}
