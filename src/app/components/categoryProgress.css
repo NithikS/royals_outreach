@@ -1,0 +1,172 @@
+/* ===== Category Progress (goal ring + category bars) ===== */
+
+.category-progress {
+  min-width: 0;
+  font-family: var(--font-sans);
+}
+
+.category-progress-body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: center;
+  padding: 0 var(--space-1);
+}
+
+@media (max-width: 600px) {
+  .category-progress-body {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: var(--space-5);
+  }
+}
+
+.category-progress-bars-only {
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0;
+}
+
+.category-progress-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.category-progress-caption {
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--tracking-section);
+  text-transform: uppercase;
+  color: var(--primaryBlue);
+}
+
+.category-progress-note {
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+}
+
+.category-progress-text {
+  min-width: 0;
+}
+
+.category-progress-heading {
+  font-size: 1.4rem;
+  font-weight: var(--fw-bold);
+  color: var(--primaryBlue);
+}
+
+.category-progress-meta {
+  font-size: 13.5px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+.category-progress-badge {
+  padding-top: var(--space-2);
+}
+
+.category-progress-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  width: 100%;
+}
+
+.category-progress-line {
+  font-size: 14px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+.category-progress-bar-line {
+  padding-top: 2px;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+.category-progress-general {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.category-progress-muted {
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+/* Total: boxed ring column (club totals) */
+
+.category-progress-total .category-progress-body {
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 36px;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .category-progress-total .category-progress-body {
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 600px) {
+  .category-progress-total .category-progress-body {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: stretch;
+  }
+}
+
+.category-progress-total .category-progress-ring {
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-2);
+  border: var(--border-card) solid var(--primaryBlue);
+  border-radius: var(--radius-card);
+}
+
+.category-progress-total .category-progress-bars {
+  gap: 18px;
+}
+
+/* Detail: framed card, ring beside the heading, bars below (one student) */
+
+.category-progress-detail {
+  padding: var(--space-6);
+  border: var(--border-card) solid var(--primaryBlue);
+  border-radius: var(--radius-card);
+}
+
+@media (max-width: 480px) {
+  .category-progress-detail {
+    padding: var(--space-4);
+  }
+}
+
+.category-progress-detail .category-progress-body {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: stretch;
+  gap: 22px;
+  padding: 0;
+}
+
+.category-progress-detail .category-progress-ring {
+  flex-direction: row;
+  gap: var(--space-6);
+}
+
+@media (max-width: 480px) {
+  .category-progress-detail .category-progress-ring {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+}
+
+.category-progress-detail .category-progress-text {
+  flex: 1;
+}

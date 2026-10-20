@@ -1,0 +1,129 @@
+/* ===== Shared muted text line ===== */
+
+.club-muted-line {
+  font-size: 13.5px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+/* ===== clubSectionHeader ===== */
+
+.club-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.club-section-eyebrow {
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primaryRed);
+}
+
+.club-section-header-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-5);
+}
+
+@media (max-width: 768px) {
+  .club-section-header-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+}
+
+.club-section-header-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.club-section-header .club-section-page-title {
+  margin: 0;
+}
+
+.club-section-header-actions {
+  flex: none;
+  padding-bottom: 6px;
+}
+
+@media (max-width: 768px) {
+  .club-section-header-actions {
+    padding-bottom: 0;
+  }
+}
+
+/* ===== clubSaveBar ===== */
+
+.club-save-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: var(--space-5);
+  border-top: var(--border-card) solid var(--secondarySilver);
+}
+
+@media (max-width: 600px) {
+  .club-save-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.club-save-bar-text {
+  flex: 1;
+  font-size: 14px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+.club-save-bar-buttons {
+  display: flex;
+  gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .club-save-bar-buttons > * {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .club-save-bar-buttons {
+    flex-direction: column-reverse;
+  }
+}
+
+/* ===== clubSettingRow (built on listRow) ===== */
+
+.club-setting-row.club-setting-row-row {
+  padding-block: 18px;
+}
+
+.club-setting-row.club-setting-row-compact {
+  padding: 0;
+  gap: 14px;
+}
+
+.club-setting-row-compact .list-row-title {
+  font-size: 14.5px;
+}
+
+/* ===== StudentRosterModal ===== */
+
+.club-roster {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: var(--font-sans);
+}
+
+.club-roster-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 320px;
+  overflow-y: auto;
+}

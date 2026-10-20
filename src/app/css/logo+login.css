@@ -1,0 +1,82 @@
+/* ================= logoButton + loginButton ================= */
+
+.home-logo-button {
+  display: flex;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.logo {
+  width: 72px;
+  height: 72px;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+/* ================= loginButton ================= */
+
+.login-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: var(--border-input) solid var(--primaryBlue);
+  border-radius: var(--radius-button);
+  background: var(--primaryBlue);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--dur-slow) ease, color var(--dur-slow) ease;
+}
+
+.login-button:hover {
+  background: var(--white);
+  color: var(--primaryBlue);
+}
+
+@media (max-width: 768px) {
+  .login-button {
+    min-height: 44px;
+  }
+}
+
+.login-dropdown {
+  position: relative;
+}
+
+.login-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: var(--space-1);
+}
+
+.profile-icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  background: none;
+  border: none;
+  color: var(--primaryBlue);
+  font-size: 2.2rem;
+  cursor: pointer;
+  transition: transform var(--dur-base) ease;
+}
+
+.profile-icon-button:hover {
+  transform: scale(1.2);
+}

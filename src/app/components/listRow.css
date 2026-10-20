@@ -1,0 +1,264 @@
+/* List row: borderless row with a 2px divider (locked decision) */
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-1);
+  border-bottom: var(--border-cell) solid var(--secondarySilver);
+  background: transparent;
+  font-family: var(--font-sans);
+  color: var(--textBlack);
+  text-align: left;
+  list-style: none;
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .list-row {
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+  }
+}
+
+.list-row-divider-blue {
+  border-bottom-color: var(--blueDivider);
+}
+
+.list-row-divider-none {
+  border-bottom: none;
+}
+
+.list-row-compact {
+  padding-block: 10px;
+}
+
+.list-row-roomy {
+  padding-block: 14px;
+  gap: 18px;
+}
+
+@media (max-width: 600px) {
+  .list-row-roomy {
+    gap: var(--space-2) var(--space-3);
+  }
+}
+
+.list-row-clickable {
+  position: relative;
+  cursor: pointer;
+  min-height: 44px;
+  border-left: 5px solid transparent;
+  padding-inline: 10px;
+  transition: background-color var(--dur-fast) ease;
+}
+
+.list-row-clickable:hover {
+  background: var(--blueHover);
+}
+
+/* Stretched row button: the title's ::after covers the whole row */
+.list-row-hit {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.list-row-hit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.list-row-hit:focus-visible {
+  box-shadow: none;
+  outline: none;
+}
+
+.list-row-hit:focus-visible::after {
+  box-shadow: var(--shadow-focus);
+}
+
+/* Title-less button over custom main content */
+.list-row-hit-empty {
+  display: block;
+  width: 0;
+  height: 0;
+}
+
+/* Trailing controls sit above the stretched hit area */
+.list-row-clickable .list-row-trailing {
+  position: relative;
+  z-index: 1;
+}
+
+.list-row-selected {
+  border-left: 5px solid var(--primaryBlue);
+  padding-inline: 10px;
+  background: var(--blueTint);
+}
+
+.list-row-highlighted {
+  background: var(--blueHover);
+}
+
+/* Slots */
+.list-row-leading {
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+
+.list-row-main {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .list-row-main {
+    flex-basis: 55%;
+  }
+}
+
+.list-row-title-line {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.list-row-title {
+  font-weight: var(--fw-bold);
+  color: var(--primaryBlue);
+}
+
+.list-row-title-lg {
+  font-size: 1.05rem;
+}
+
+.list-row-inline-meta {
+  font-size: 13.5px;
+}
+
+.list-row-subtitle {
+  font-size: 13.5px;
+  overflow-wrap: anywhere;
+}
+
+.list-row-subtitle-muted {
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+.list-row-extra {
+  font-size: 13px;
+}
+
+.list-row-end {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+@media (max-width: 600px) {
+  .list-row-end {
+    margin-left: auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+
+.list-row-meta {
+  font-weight: var(--fw-bold);
+  font-size: 14px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.list-row-trailing {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Date block (leading slot) */
+.list-row-date {
+  width: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  text-align: center;
+  color: var(--primaryBlue);
+}
+
+@media (max-width: 480px) {
+  .list-row-date {
+    width: 52px;
+  }
+}
+
+.list-row-date-solid {
+  padding: 6px 0;
+  background: var(--primaryBlue);
+  color: var(--white);
+  border-radius: var(--radius-button);
+}
+
+.list-row-date-month {
+  font-weight: var(--fw-semibold);
+  font-size: 12px;
+  letter-spacing: var(--tracking-section);
+  text-transform: uppercase;
+}
+
+.list-row-date-accent .list-row-date-month {
+  font-weight: var(--fw-bold);
+  font-size: 11px;
+  color: var(--primaryRed);
+}
+
+.list-row-date-day {
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-xl);
+}
+
+@media (max-width: 480px) {
+  .list-row-date-day {
+    font-size: var(--fs-lg);
+  }
+}
+
+.list-row-date-note {
+  font-size: 10.5px;
+  font-weight: var(--fw-bold);
+  color: var(--secondaryGray);
+}
+
+/* Icon tile (leading slot) */
+.list-row-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border-radius: var(--radius-tile);
+  background: var(--primaryBlue);
+  color: var(--white);
+}
+
+.list-row-icon-sm {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+}
+
+.list-row-icon-md {
+  width: 52px;
+  height: 52px;
+  font-size: 24px;
+}

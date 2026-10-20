@@ -1,0 +1,62 @@
+/* Empty state: centered muted line for lists with no rows */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 30px var(--space-4);
+  font-family: var(--font-sans);
+  text-align: center;
+  color: var(--textBlack);
+}
+
+.empty-state-sm {
+  padding-block: var(--space-6);
+}
+
+.empty-state-md {
+  padding-block: 36px;
+}
+
+@media (max-width: 600px) {
+  .empty-state-md {
+    padding-block: var(--space-8);
+  }
+}
+
+.empty-state-framed {
+  border: var(--border-cell) dashed var(--secondarySilver);
+  border-radius: var(--radius-card);
+}
+
+.empty-state-icon {
+  font-size: 36px;
+  line-height: 1;
+  color: var(--secondarySilver);
+}
+
+.empty-state-sm .empty-state-icon {
+  font-size: 28px;
+}
+
+.empty-state-title {
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-lg);
+  color: var(--primaryBlue);
+}
+
+.empty-state-message {
+  max-width: 520px;
+  font-weight: var(--fw-semibold);
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+.empty-state-sm .empty-state-message {
+  font-size: var(--fs-md);
+}
+
+.empty-state-action {
+  margin-top: var(--space-2);
+}

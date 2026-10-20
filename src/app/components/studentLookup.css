@@ -1,0 +1,137 @@
+/* ---------------- studentLookup ---------------- */
+
+.student-lookup {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+  font-family: var(--font-sans);
+  color: var(--textBlack);
+  text-align: left;
+}
+
+.student-lookup-search {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.student-lookup-more {
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+.student-lookup-empty {
+  font-weight: var(--fw-semibold);
+  opacity: 0.7;
+}
+
+.student-lookup-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+}
+
+/* Club-scoped detail row (Email, Student ID, Grad Class, Member Group) */
+.student-lookup-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .student-lookup-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.student-lookup-fact-label {
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  color: var(--secondaryGray);
+}
+
+.student-lookup-fact-value {
+  font-weight: var(--fw-semibold);
+  word-break: break-word;
+}
+
+/* Stat cards */
+.student-lookup-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.student-lookup-stats-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 768px) {
+  .student-lookup-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .student-lookup-stats-three {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Borderless rows with silver dividers */
+.student-lookup-list {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .student-lookup-edit {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Goal progress */
+.student-lookup-goals {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.student-lookup-goal {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+  padding: 0 var(--space-1);
+}
+
+@media (max-width: 600px) {
+  .student-lookup-goal {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+.student-lookup-goal-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.student-lookup-goal-name {
+  font-weight: var(--fw-bold);
+  font-size: 13px;
+  color: var(--primaryBlue);
+  text-align: center;
+}
+
+.student-lookup-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}

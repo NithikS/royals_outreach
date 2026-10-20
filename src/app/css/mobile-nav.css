@@ -1,0 +1,198 @@
+/* ================= MobileNav: top bar + slide-out drawer (phones only) ================= */
+
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 150;
+  }
+}
+
+.mobile-nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--navy);
+  color: var(--white);
+}
+
+.mobile-nav-bar .side-nav-brand {
+  flex: 1;
+}
+
+.mobile-nav-avatar {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--secondarySilver);
+  color: var(--navy);
+  font-weight: var(--fw-bold);
+  font-size: 13px;
+}
+
+.mobile-nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: transform var(--dur-fast) ease;
+}
+
+.mobile-nav-toggle:hover {
+  transform: scale(1.1);
+}
+
+.mobile-nav-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: var(--scrim);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-slow) ease;
+}
+
+.mobile-nav-scrim.mobile-nav-scrim-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 200;
+  width: min(300px, 85vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--navy);
+  color: var(--white);
+  font-family: var(--font-sans);
+  transform: translateX(-100%);
+  transition: transform var(--dur-slow) ease;
+}
+
+.mobile-nav-drawer.mobile-nav-drawer-open {
+  transform: translateX(0);
+}
+
+.mobile-nav-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px var(--space-3) var(--space-4) var(--space-5);
+}
+
+/* ================= bottomNav (phones only) ================= */
+
+.bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 120;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--white);
+    border-top: var(--border-input) solid var(--secondarySilver);
+    font-family: var(--font-sans);
+  }
+}
+
+.bottom-nav-item {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 62px;
+  padding: var(--space-2) 2px;
+  border: none;
+  background: none;
+  color: var(--secondaryGray);
+  font-weight: var(--fw-bold);
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--dur-fast) ease;
+}
+
+@media (max-width: 480px) {
+  .bottom-nav-item {
+    font-size: 10px;
+  }
+}
+
+.bottom-nav-item:hover,
+.bottom-nav-item.bottom-nav-item-active {
+  color: var(--primaryBlue);
+}
+
+/* 3px blue bar across the top of the active item */
+.bottom-nav-item.bottom-nav-item-active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primaryBlue);
+}
+
+.bottom-nav-icon {
+  position: relative;
+  display: inline-flex;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.bottom-nav-badge {
+  position: absolute;
+  top: -6px;
+  right: -12px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-badge);
+  background: var(--primaryRed);
+  color: var(--white);
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.bottom-nav-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,113 @@
+/* ---------------- hoursStatRow (Approved / Pending / Denied cards) ---------------- */
+
+.student-stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+@media (max-width: 480px) {
+  .student-stat-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------------- user menu (log out popover above the side nav user block) ---------------- */
+
+.user-menu {
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: 90px;
+  z-index: 5;
+  overflow: hidden;
+  background: var(--white);
+  border: var(--border-input) solid var(--primaryBlue);
+  border-radius: var(--radius-card);
+  font-family: var(--font-sans);
+  animation: ro-slide-down var(--dur-base) ease;
+}
+
+/* Compact rail (forced or tablet width): pop out to the right of the rail */
+.side-nav-compact .user-menu {
+  left: calc(100% + var(--space-2));
+  right: auto;
+  bottom: var(--space-3);
+  width: 240px;
+}
+
+@media (max-width: 1024px) {
+  .side-nav .user-menu {
+    left: calc(100% + var(--space-2));
+    right: auto;
+    bottom: var(--space-3);
+    width: 240px;
+  }
+}
+
+.user-menu-header {
+  padding: 10px var(--space-4);
+  border-bottom: var(--border-cell) solid var(--secondarySilver);
+}
+
+.user-menu-name {
+  font-weight: var(--fw-bold);
+  font-size: 14px;
+  color: var(--primaryBlue);
+}
+
+.user-menu-detail {
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: 15px;
+  text-align: left;
+  text-decoration: none;
+  color: var(--primaryBlue);
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) ease;
+}
+
+.user-menu-item:hover {
+  color: var(--primaryBlue);
+  background: var(--blueHover);
+}
+
+.user-menu-logout,
+.user-menu-logout:hover {
+  color: var(--primaryRed);
+}
+
+/* ---------------- club picker (tile grid) ---------------- */
+
+.student-club-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+@media (max-width: 900px) {
+  .student-club-picker {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .student-club-picker {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+}

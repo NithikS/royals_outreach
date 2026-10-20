@@ -1,0 +1,106 @@
+/* ---------------- opportunity card (event row built on listRow) ---------------- */
+
+/* Meta slot holds the spots line and the hours side by side */
+.opportunity-card .list-row-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.opportunity-card-hours {
+  width: 60px;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .opportunity-card-hours {
+    width: auto;
+  }
+}
+
+.opportunity-card-mine .opportunity-card-hours {
+  width: 70px;
+}
+
+@media (max-width: 600px) {
+  .opportunity-card-mine .opportunity-card-hours {
+    width: auto;
+  }
+}
+
+/* "4 of 12 spots taken" */
+.opportunity-card-spots {
+  width: 150px;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+  white-space: normal;
+}
+
+@media (max-width: 900px) {
+  .opportunity-card-spots {
+    width: 120px;
+  }
+}
+
+@media (max-width: 600px) {
+  .opportunity-card-spots {
+    width: auto;
+  }
+}
+
+/* Fixed columns keep badges and buttons aligned from row to row */
+.opportunity-card-badge {
+  width: 120px;
+  display: flex;
+}
+
+.opportunity-card-badge:empty {
+  display: none;
+}
+
+.opportunity-card-open .opportunity-card-badge:empty {
+  display: flex;
+}
+
+@media (max-width: 900px) {
+  .opportunity-card-open .opportunity-card-badge:empty {
+    display: none;
+  }
+}
+
+.opportunity-card-action {
+  width: 110px;
+  display: flex;
+}
+
+@media (max-width: 600px) {
+  .opportunity-card-badge {
+    width: auto;
+  }
+
+  .opportunity-card-action {
+    width: auto;
+    min-width: 110px;
+  }
+}
+
+/* Manage variant: slots bar with "12 / 20 Slots" under it */
+.opportunity-card-slots {
+  width: 170px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+@media (max-width: 600px) {
+  .opportunity-card-slots {
+    width: 140px;
+  }
+}
+
+.opportunity-card-slots-line {
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--textBlack);
+}

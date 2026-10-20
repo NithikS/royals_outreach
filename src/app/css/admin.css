@@ -1,0 +1,74 @@
+/* ================= adminButtons (nav tile) ================= */
+
+.admin-nav-button {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: clamp(90px, 8vw, 130px);
+  padding: var(--space-4) var(--space-5);
+  border: var(--border-tile) solid transparent;
+  border-radius: var(--radius-tile);
+  background-color: var(--primaryBlue);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: clamp(1.1rem, 1.6vw, 1.6rem);
+  line-height: 1.25;
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
+  cursor: pointer;
+  transition: background-color var(--dur-slow);
+}
+
+.admin-nav-button:hover {
+  background-color: var(--white);
+  color: var(--primaryBlue);
+  border-color: var(--primaryBlue);
+}
+
+@media (max-width: 1024px) {
+  .admin-nav-button {
+    height: clamp(100px, 11vw, 140px);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-nav-button {
+    height: auto;
+    min-height: 90px;
+    padding: var(--space-3) var(--space-4);
+    border-width: 6px;
+    font-size: 1.2rem;
+  }
+}
+
+.admin-nav-button.admin-nav-button-danger {
+  background-color: var(--primaryRed);
+}
+
+.admin-nav-button.admin-nav-button-danger:hover {
+  background-color: var(--white);
+  color: var(--primaryRed);
+  border-color: var(--primaryRed);
+}
+
+.admin-nav-button.admin-nav-button-dashed {
+  background-color: var(--white);
+  color: var(--primaryBlue);
+  border: 4px dashed var(--primaryBlue);
+  transition: background-color var(--dur-base);
+}
+
+.admin-nav-button.admin-nav-button-dashed:hover {
+  background-color: var(--blueHover);
+}
+
+.admin-nav-button-icon {
+  font-size: 1.3em;
+  line-height: 1;
+}

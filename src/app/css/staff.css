@@ -1,0 +1,87 @@
+/* ===== Shared dialog body (CreateClubDialog, AssignStaffDialog) ===== */
+
+.staff-dialog-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  text-align: left;
+}
+
+/* ===== AssignStaffDialog ===== */
+
+.staff-assign-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.staff-assign-empty {
+  padding: 10px 2px;
+  font-weight: var(--fw-semibold);
+  opacity: 0.7;
+}
+
+.staff-assign-add {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+@media (max-width: 480px) {
+  .staff-assign-add {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.staff-assign-select {
+  flex: 1;
+}
+
+/* Icon buttons grow to a 44px tap target on touch widths */
+@media (max-width: 768px) {
+  .staff-icon-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* ===== ClubDirectory (All Clubs body) ===== */
+
+.staff-directory {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+}
+
+/* Large count head ("7 Clubs · 2 Shown"); sits closer to the grid below */
+.section-head.staff-directory-count {
+  margin-bottom: -6px;
+}
+
+.staff-directory-count .section-head-label {
+  font-size: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 600px) {
+  .staff-directory-count .section-head-label {
+    font-size: 1.2rem;
+  }
+}
+
+/* ===== Club card bodies (ClubDirectory) ===== */
+
+.staff-card-label {
+  font-weight: var(--fw-bold);
+  font-size: 12px;
+  letter-spacing: var(--tracking-section);
+  text-transform: uppercase;
+  color: var(--primaryBlue);
+}
+
+.staff-card-staff {
+  font-size: 15px;
+  color: var(--textBlack);
+}

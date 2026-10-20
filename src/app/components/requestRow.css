@@ -1,0 +1,29 @@
+/* Request row: hour request on a ListRow (student, club and staff lists) */
+
+.request-row-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.request-row-hours {
+  min-width: 56px;
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .request-row-hours {
+    min-width: 0;
+  }
+}
+
+.request-row-photo {
+  font-size: 18px;
+  color: var(--primaryBlue);
+}
+
+.request-row-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}

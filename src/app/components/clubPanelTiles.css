@@ -1,0 +1,26 @@
+/* ===== Club Panel Tiles (Staff Your Clubs, Student Exec Clubs) ===== */
+
+.club-card.club-panel-tiles-card {
+  gap: var(--space-5);
+}
+
+.club-panel-tiles-total {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.club-panel-tiles-label {
+  font-weight: var(--fw-bold);
+  font-size: 12px;
+  letter-spacing: var(--tracking-section);
+  text-transform: uppercase;
+  color: var(--primaryBlue);
+}
+
+.club-panel-tiles-value {
+  font-weight: var(--fw-bold);
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  line-height: 1.1;
+  color: var(--textBlack);
+}
