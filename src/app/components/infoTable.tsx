@@ -12,6 +12,8 @@ export type InfoTableColumn<T extends InfoTableRow> = {
   key: string;
   /** Header text. Also the mobile card label; leave empty for an action column. */
   label: string;
+  /** Custom header content (a select-all checkbox, a copy button). Defaults to `label`. */
+  header?: React.ReactNode;
   /** Fixed column width, e.g. "120px" or "20%". */
   width?: string;
   align?: "left" | "center" | "right";
@@ -63,7 +65,7 @@ export default function InfoTable<T extends InfoTableRow>({
                 key={column.key}
                 style={column.width ? { width: column.width } : undefined}
               >
-                {column.label}
+                {column.header ?? column.label}
               </th>
             ))}
           </tr>

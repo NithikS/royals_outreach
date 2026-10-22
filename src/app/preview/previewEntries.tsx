@@ -43,6 +43,7 @@ import HelpButton from "../components/helpButton";
 // Shared composites
 import ListRow, { ListRowDate, ListRowIcon } from "../components/listRow";
 import EmptyState from "../components/emptyState";
+import ChoiceCards from "../components/choiceCards";
 import FormSection, { FormSectionSpan } from "../components/formSection";
 import FilterBar from "../components/filterBar";
 import DetailList from "../components/detailList";
@@ -917,6 +918,27 @@ export const PREVIEW_ENTRIES: PreviewEntry[] = [
           subtitle: "Oct 24, Oct 31, Nov 7 · Tutoring · 1.5 hrs",
           children: "HSE Library",
           highlighted: true,
+        },
+      },
+    ],
+  }),
+  entry({
+    name: "ChoiceCards",
+    file: "choiceCards.tsx",
+    group: "Shared Composites",
+    pages: ["Manage Members (remove, export, record conflict dialogs)"],
+    component: ChoiceCards,
+    examples: [
+      { label: "Row", props: { value: "categories" } },
+      {
+        label: "Column, danger",
+        props: {
+          direction: "column",
+          value: "delete",
+          options: [
+            { value: "deactivate", icon: "person-dash", title: "Deactivate Membership", description: "Keeps their hours and club history." },
+            { value: "delete", icon: "trash", tone: "danger", title: "Remove Membership And History", description: "This cannot be undone." },
+          ],
         },
       },
     ],

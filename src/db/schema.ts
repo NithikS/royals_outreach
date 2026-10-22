@@ -68,7 +68,8 @@ export const studentClubMembership = pgTable("student_club_membership", {
   num:       integer("num").primaryKey().generatedAlwaysAsIdentity(),
   clubId:    integer("club_id").references(() => clubData.clubId),
   studentId: integer("student_id").references(() => studentUserData.studentId),
-  status:    boolean("status"),
+  membership_status:    boolean("membership_status"),
+  is_exec:    boolean("is_exec"),
 });
 
 // ---------------- club_staff_assignment ----------------

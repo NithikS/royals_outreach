@@ -1,0 +1,73 @@
+/* ===== choiceCards: big selectable option cards ===== */
+
+.choice-cards {
+  display: flex;
+  gap: var(--space-4);
+  font-family: var(--font-sans);
+}
+
+.choice-cards.choice-cards-column {
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+@media (max-width: 600px) {
+  .choice-cards.choice-cards-row {
+    flex-direction: column;
+  }
+}
+
+.choice-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  border: var(--border-card) solid var(--secondarySilver);
+  border-radius: 12px;
+  background: var(--white);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur-slow), border-color var(--dur-slow);
+}
+
+.choice-card:hover {
+  background: var(--blueHover);
+}
+
+.choice-card:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.choice-card.choice-card-selected {
+  border-color: var(--primaryBlue);
+}
+
+.choice-card.choice-card-danger.choice-card-selected {
+  border-color: var(--primaryRed);
+}
+
+.choice-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: var(--fw-bold);
+  color: var(--primaryBlue);
+}
+
+.choice-card-danger .choice-card-title {
+  color: var(--primaryRed);
+}
+
+.choice-card-title .bi {
+  font-size: 20px;
+}
+
+.choice-card-description {
+  font-size: 13.5px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
