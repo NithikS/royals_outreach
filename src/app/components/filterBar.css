@@ -8,8 +8,10 @@
   min-width: 0;
 }
 
+/* Wraps onto more lines whenever the fields do not fit */
 .filter-bar-fields {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
   gap: var(--space-4);
   min-width: 0;
@@ -17,14 +19,13 @@
 
 @media (max-width: 768px) {
   .filter-bar-fields {
-    flex-wrap: wrap;
     gap: var(--space-3);
   }
 }
 
 .filter-bar-search {
-  flex: 1;
-  min-width: 220px;
+  flex: 1 1 320px;
+  min-width: 260px;
 }
 
 @media (max-width: 768px) {

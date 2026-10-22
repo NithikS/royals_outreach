@@ -7,6 +7,7 @@ export type ClubRole = "Staff" | "Student" | "Admin";
 export type ClubSection =
   | "overview"
   | "config"
+  | "members"
   | "categories"
   | "groups"
   | "requests"

@@ -15,6 +15,7 @@ type ClubPanelSectionDef = {
 export const CLUB_PANEL_SECTIONS: ClubPanelSectionDef[] = [
   { value: "overview", label: "Overview", icon: "grid", group: "Overview" },
   { value: "config", label: "Club Config", icon: "gear", group: "Setup" },
+  { value: "members", label: "Manage Members", icon: "person-lines-fill", group: "Setup" },
   { value: "categories", label: "Categories", icon: "tags", group: "Setup" },
   { value: "groups", label: "Member Groups", icon: "people", group: "Setup" },
   { value: "requests", label: "Hour Requests", icon: "inbox", group: "Hours" },
