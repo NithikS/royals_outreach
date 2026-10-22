@@ -49,7 +49,6 @@ export const clubData = pgTable("club_data", {
   clubId:         integer("club_id").primaryKey().generatedAlwaysAsIdentity(),
   clubName:       text("club_name"),
   execNeedsHours: boolean("exec_needs_hours"),
-  hasCategories:  boolean("has_categories"),
   clubLogoFileId: text("club_logo_file_id"),
   doubleDipping:  boolean("double_dipping"),
 });

@@ -127,3 +127,65 @@
   max-height: 320px;
   overflow-y: auto;
 }
+
+/* ===== Club Config page ===== */
+
+.club-config {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  font-family: var(--font-sans);
+}
+
+.club-config-header-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .club-config-header-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.club-config-details {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: end;
+}
+
+@media (max-width: 768px) {
+  .club-config-details {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+}
+
+.club-config-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.club-config-logo-tile {
+  width: 104px;
+  height: 104px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--primaryBlue);
+  color: var(--white);
+  font-size: 52px;
+}
+
+.club-config-logo-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
