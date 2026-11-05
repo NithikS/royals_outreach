@@ -9,7 +9,12 @@ import type { ClubRole, ClubSection } from "@/lib/canSee";
 const ROLE: ClubRole = "Staff";
 const BACK_HREF = "/";
 
-export default function ClubPanelNavUI() {
+type ClubPanelNavUIProps = {
+  /** Shown on Hour Requests; no badge at zero. */
+  pendingRequests: number;
+};
+
+export default function ClubPanelNavUI({ pendingRequests }: ClubPanelNavUIProps) {
   const router = useRouter();
   const pathname = usePathname();
   const { clubId } = useParams<{ clubId: string }>();
@@ -17,12 +22,13 @@ export default function ClubPanelNavUI() {
   // /club/12/config -> "config"
   const section = (pathname.split("/")[3] || "overview") as ClubSection;
   const goTo = (value: string) => router.push(`/club/${clubId}/${value}`);
+  const badges = pendingRequests > 0 ? { requests: pendingRequests } : {};
 
   return (
     <>
-      <ClubPanelNav role={ROLE} badges={{}} value={section} onChange={goTo} backHref={BACK_HREF} />
+      <ClubPanelNav role={ROLE} badges={badges} value={section} onChange={goTo} backHref={BACK_HREF} />
       <MobileNav
-        items={buildClubPanelNavItems({ role: ROLE, badges: {} })}
+        items={buildClubPanelNavItems({ role: ROLE, badges })}
         value={section}
         onChange={(value) => {
           if (value !== "images") goTo(value);

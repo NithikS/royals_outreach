@@ -14,6 +14,7 @@ import {
   studentUserData,
 } from "@/db/schema";
 import { and, eq, inArray, sql } from "drizzle-orm";
+import { refresh } from "next/cache";
 import { toTitleCase } from "@/lib/toTitleCase";
 import { STUDENT_EMAIL_DOMAIN, isStudentEmail } from "@/lib/studentEmail";
 
@@ -356,5 +357,8 @@ export const removeMembersAndHistory = async (clubId: number, studentIds: number
       .delete(studentClubMembership)
       .where(and(eq(studentClubMembership.clubId, clubId), inArray(studentClubMembership.studentId, ids))),
   ]);
+
+  // Deleted requests can change the Hour Requests badge in the side nav
+  refresh();
   return { success: true, count: ids.length };
 };

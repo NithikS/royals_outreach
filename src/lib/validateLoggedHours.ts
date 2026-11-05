@@ -19,7 +19,7 @@ export const MAX_HOURS_PER_ENTRY = 24;
 // logged_hours.hours is numeric(6, 2), so 0.25 is fine but 0.333 is not
 const HOURS_PATTERN = /^(\d+(\.\d{1,2})?|\.\d{1,2})$/;
 const MAX_NAME_LENGTH = 120;
-const MAX_MESSAGE_LENGTH = 1000;
+export const MAX_MESSAGE_LENGTH = 1000;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -43,18 +43,19 @@ export function cleanLoggedHours(fields: LoggedHoursFields): LoggedHoursFields {
   };
 }
 
-function opportunityNameError(name: string): string | undefined {
+// The checks the club panel shares when an exec edits or adds hours.
+export function opportunityNameError(name: string): string | undefined {
   if (!name) return "Enter the opportunity name.";
   if (name.length > MAX_NAME_LENGTH) return `Keep this under ${MAX_NAME_LENGTH} characters.`;
 }
 
-function dateError(date: string, today: string): string | undefined {
+export function dateError(date: string, today: string): string | undefined {
   if (!date) return "Enter the date served.";
   if (!isRealDate(date)) return "Enter a real date.";
   if (date > today) return "The date cannot be in the future.";
 }
 
-function hoursError(value: string): string | undefined {
+export function hoursError(value: string): string | undefined {
   const hours = Number(value);
   if (!value) return "Enter the hours.";
   if (!HOURS_PATTERN.test(value)) return "Enter a number with up to 2 decimal places, like 1.5.";

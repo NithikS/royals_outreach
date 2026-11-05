@@ -16,8 +16,10 @@ import { useToast } from "@/app/context/ToastContext";
 import { plural } from "@/lib/plural";
 
 import {
+  getCategoryRequestChanges,
   getCategoryUsage,
   saveClubCategories,
+  type CategoryRequestChanges,
   type CategoryUsage,
   type ClubCategory,
 } from "@/actions/categories";
@@ -52,6 +54,9 @@ export default function ClubCategoriesUI({
   const [pendingDelete, setPendingDelete] = useState<PendingDelete | null>(
     null,
   );
+  const [requestChanges, setRequestChanges] = useState<
+    CategoryRequestChanges[] | null
+  >(null);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -93,6 +98,20 @@ export default function ClubCategoriesUI({
     }
   };
 
+  const save = async () => {
+    const result = await saveClubCategories(clubId, categories, deletedIds);
+    if (!result.success) {
+      setError(result.error);
+      return;
+    }
+    setCategories(result.categories);
+    setSaved(result.categories);
+    setDeletedIds([]);
+    setError("");
+    showToast("Categories saved.", "success");
+  };
+
+  // Rule changes that move pending requests are confirmed first
   const handleSave = async () => {
     if (isSubmitting) return;
     if (categories.some((c) => !c.categoryName.trim())) {
@@ -102,19 +121,26 @@ export default function ClubCategoriesUI({
 
     setIsSubmitting(true);
     try {
-      const result = await saveClubCategories(clubId, categories, deletedIds);
-      if (!result.success) {
-        setError(result.error);
-        return;
-      }
-      setCategories(result.categories);
-      setSaved(result.categories);
-      setDeletedIds([]);
-      setError("");
-      showToast("Categories saved.", "success");
+      const changes = await getCategoryRequestChanges(clubId, categories);
+      if (changes.length > 0) setRequestChanges(changes);
+      else await save();
     } catch {
       showToast("Could not save categories.", "danger");
     } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleConfirmSave = async () => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    try {
+      await save();
+    } catch {
+      showToast("Could not save categories.", "danger");
+    } finally {
+      setRequestChanges(null);
       setIsSubmitting(false);
     }
   };
@@ -223,12 +249,21 @@ export default function ClubCategoriesUI({
 
       {/* Footer */}
       <ClubSaveBar
-        dirty={dirty && !isSubmitting}
+        dirty={dirty}
+        saving={isSubmitting}
         onDiscard={handleDiscard}
         onSave={handleSave}
       />
 
       {/* Dialogs */}
+      {requestChanges && (
+        <RequestChangesDialog
+          changes={requestChanges}
+          saving={isSubmitting}
+          onConfirm={handleConfirmSave}
+          onClose={() => setRequestChanges(null)}
+        />
+      )}
       {pendingDelete && !pendingDelete.usage && (
         <ConfirmDialog
           title="Delete Category"
@@ -278,5 +313,84 @@ export default function ClubCategoriesUI({
         </ModalShell>
       )}
     </div>
+  );
+}
+
+type RequestChangesDialogProps = {
+  changes: CategoryRequestChanges[];
+  saving: boolean;
+  onConfirm: () => void;
+  onClose: () => void;
+};
+
+function RequestChangesDialog({
+  changes,
+  saving,
+  onConfirm,
+  onClose,
+}: RequestChangesDialogProps) {
+  const sum = (key: "total" | "toApproved" | "toEmailVerification" | "coordinatorsCleared") =>
+    changes.reduce((n, c) => n + c[key], 0);
+
+  const moves = (c: CategoryRequestChanges) =>
+    [
+      c.toApproved > 0 ? `${c.toApproved} to Approved` : "",
+      c.toClubVerification > 0
+        ? `${c.toClubVerification} to Pending Club Verification`
+        : "",
+      c.toEmailVerification > 0
+        ? `${c.toEmailVerification} to Pending Email Verification`
+        : "",
+    ]
+      .filter(Boolean)
+      .join(", ");
+
+  return (
+    <ModalShell
+      title="Update Pending Requests"
+      width="520px"
+      onClose={() => {
+        if (!saving) onClose();
+      }}
+      footer={
+        <>
+          <SaveButton variant="secondary" onClick={onClose} disabled={saving}>
+            Cancel
+          </SaveButton>
+          <SaveButton onClick={onConfirm} disabled={saving}>
+            {saving ? "Saving..." : "Save Changes"}
+          </SaveButton>
+        </>
+      }
+    >
+      <p className="confirm-dialog-text">
+        These rule changes will affect{" "}
+        <strong>{plural(sum("total"), "pending request")}</strong>.
+      </p>
+      <ul className="club-request-changes">
+        {changes.map((c) => (
+          <li key={c.categoryId}>
+            <strong>{c.categoryName}:</strong> {moves(c)}.
+          </li>
+        ))}
+      </ul>
+      {sum("toApproved") > 0 && (
+        <p className="confirm-dialog-text">
+          Approved requests count right away and do not go back to pending.
+        </p>
+      )}
+      {sum("coordinatorsCleared") > 0 && (
+        <p className="confirm-dialog-text">
+          {plural(sum("coordinatorsCleared"), "request")} will lose the
+          coordinator the student entered.
+        </p>
+      )}
+      {sum("toEmailVerification") > 0 && (
+        <p className="confirm-dialog-text">
+          Students must add a coordinator to requests moved to email
+          verification.
+        </p>
+      )}
+    </ModalShell>
   );
 }

@@ -462,7 +462,7 @@ export default function MemberGroupsUI({ clubId, clubName, initialGroups, catego
       )}
 
       {/* Footer */}
-      <ClubSaveBar dirty={dirty && !isSubmitting} onDiscard={handleDiscard} onSave={handleSave} />
+      <ClubSaveBar dirty={dirty} saving={isSubmitting} onDiscard={handleDiscard} onSave={handleSave} />
 
       {/* Dialogs */}
       {rosterOpen && current && (

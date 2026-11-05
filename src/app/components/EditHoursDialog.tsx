@@ -22,6 +22,10 @@ type EditHoursDialogProps = {
   onSave?: (request: HourRequest) => void;
   /** Shows a Delete Request button in the footer. */
   onDelete?: (id: HourRequest["id"]) => void;
+  /** Disables the buttons while the save runs. */
+  saving?: boolean;
+  /** Red message above the footer when the save fails. */
+  error?: string;
 };
 
 const DEFAULT_REQUEST: HourRequest = {
@@ -43,8 +47,12 @@ export default function EditHoursDialog({
   onClose = () => {},
   onSave,
   onDelete,
+  saving = false,
+  error,
 }: EditHoursDialogProps) {
   const [draft, setDraft] = useState<HourRequest>(request);
+  // Kept as typed so the field can be cleared while editing
+  const [hoursText, setHoursText] = useState(String(request.hours));
   const hasCategories = categories.length > 0;
 
   // "student · opportunity" when a student is set, otherwise the opportunity with club and category below
@@ -59,14 +67,16 @@ export default function EditHoursDialog({
       footer={
         <>
           {onDelete && (
-            <SaveButton variant="danger" onClick={() => onDelete(request.id)}>
+            <SaveButton variant="danger" disabled={saving} onClick={() => onDelete(request.id)}>
               Delete Request
             </SaveButton>
           )}
-          <SaveButton variant="secondary" onClick={onClose}>
+          <SaveButton variant="secondary" disabled={saving} onClick={onClose}>
             Cancel
           </SaveButton>
-          <SaveButton onClick={() => onSave?.(draft)}>Save Changes</SaveButton>
+          <SaveButton disabled={saving} onClick={() => onSave?.(draft)}>
+            {saving ? "Saving..." : "Save Changes"}
+          </SaveButton>
         </>
       }
     >
@@ -81,19 +91,33 @@ export default function EditHoursDialog({
         <Input
           label="Hours"
           type="number"
-          value={draft.hours}
-          onChange={(e) => setDraft({ ...draft, hours: Math.max(0, Number(e.target.value)) })}
+          step="any"
+          value={hoursText}
+          onChange={(e) => {
+            setHoursText(e.target.value);
+            setDraft({ ...draft, hours: Math.max(0, Number(e.target.value)) });
+          }}
         />
-        <Input
-          label="Date"
-          value={draft.date}
-          onChange={(e) => setDraft({ ...draft, date: e.target.value })}
-        />
+        {draft.isoDate !== undefined ? (
+          <Input
+            label="Date"
+            type="date"
+            value={draft.isoDate}
+            onChange={(e) => setDraft({ ...draft, isoDate: e.target.value })}
+          />
+        ) : (
+          <Input
+            label="Date"
+            value={draft.date}
+            onChange={(e) => setDraft({ ...draft, date: e.target.value })}
+          />
+        )}
         {hasCategories && (
           <Select
             label="Category"
+            placeholder="Select Category"
             options={categories}
-            value={draft.category}
+            value={draft.category ?? ""}
             onChange={(e) => setDraft({ ...draft, category: e.target.value })}
           />
         )}
@@ -105,6 +129,12 @@ export default function EditHoursDialog({
             onChange={(e) => setDraft({ ...draft, status: e.target.value as HourRequestStatus })}
           />
         </div>
+
+        {error && (
+          <p className="edit-hours-error edit-hours-full" role="alert">
+            {error}
+          </p>
+        )}
       </div>
     </ModalShell>
   );

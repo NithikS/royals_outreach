@@ -38,6 +38,8 @@ export type HourRequest = {
   date: string;
   /** Full date for detail panels ("Sep 20, 2026"). */
   fullDate?: string;
+  /** ISO date ("2026-09-20"). When set, EditHoursDialog edits it with a date picker. */
+  isoDate?: string;
   hours: number;
   status: HourRequestStatus;
   hasPhoto?: boolean;

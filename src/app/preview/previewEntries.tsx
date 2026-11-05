@@ -1411,6 +1411,16 @@ export const PREVIEW_ENTRIES: PreviewEntry[] = [
         },
       },
       { label: "General Hours Only", frame: "dialog", props: { request: { ...REQ_DENIED, student: undefined }, categories: [], onSave: cb("onSave", "(request)") } },
+      {
+        label: "Date Picker With Error",
+        frame: "dialog",
+        props: {
+          request: { ...REQ_PENDING, isoDate: "2026-10-02", student: { fName: "Katara", lName: "Lopez" } },
+          categories: ["Event Help", "Fundraising"],
+          error: "The date cannot be in the future.",
+          onSave: cb("onSave", "(request)"),
+        },
+      },
     ],
   }),
   entry({
@@ -1576,6 +1586,7 @@ export const PREVIEW_ENTRIES: PreviewEntry[] = [
     component: ClubSaveBar,
     examples: [
       { label: "Dirty", props: { dirty: true, onDiscard: cb("onDiscard"), onSave: cb("onSave") } },
+      { label: "Saving", props: { dirty: true, saving: true } },
       { label: "Clean", props: { dirty: false } },
     ],
   }),

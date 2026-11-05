@@ -1639,6 +1639,13 @@
   color: var(--textBlack);
 }
 
+.edit-hours-error {
+  margin: 0;
+  font-size: 14px;
+  font-weight: var(--fw-semibold);
+  color: var(--primaryRed);
+}
+
 /* ConfirmDialog */
 
 .confirm-dialog-text {

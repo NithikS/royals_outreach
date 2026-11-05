@@ -133,7 +133,7 @@ export default function ClubConfigUI({ club }: { club: ClubConfig }) {
       </section>
 
       {/* Footer */}
-      <ClubSaveBar dirty={dirty && !isSubmitting} onDiscard={handleDiscard} onSave={handleSave} />
+      <ClubSaveBar dirty={dirty} saving={isSubmitting} onDiscard={handleDiscard} onSave={handleSave} />
     </div>
   );
 }

@@ -2,8 +2,9 @@
 
 import { db } from "@/db";
 import { additionalHours, categoryClubGroupAssignment, categoryData, loggedHours, signUps } from "@/db/schema";
-import { and, count, eq, inArray } from "drizzle-orm";
+import { and, count, eq, inArray, sql } from "drizzle-orm";
 import type { BatchItem } from "drizzle-orm/batch";
+import { refresh } from "next/cache";
 
 export type ClubCategory = {
   /** Zero or negative for a category that is not saved yet. */
@@ -12,6 +13,18 @@ export type ClubCategory = {
   goal: number;
   needsEmailVerification: boolean;
   needsClubConfirmation: boolean;
+};
+
+/** What saving a category's new rules does to its pending requests. */
+export type CategoryRequestChanges = {
+  categoryId: number;
+  categoryName: string;
+  total: number;
+  toEmailVerification: number;
+  toClubVerification: number;
+  toApproved: number;
+  /** Requests that lose their coordinator because the email step is gone. */
+  coordinatorsCleared: number;
 };
 
 export type CategoryUsage = {
@@ -34,6 +47,49 @@ const countWhere = async (
 ) => {
   const rows = await db.select({ n: count() }).from(table).where(eq(table.categoryId, categoryId));
   return rows[0]?.n ?? 0;
+};
+
+const PENDING_STATUSES = ["Pending Email Verification", "Pending Club Verification"];
+const COORDINATOR_VERIFIED = sql<boolean>`(${loggedHours.status} = 'Pending Club Verification' and ${loggedHours.coordinatorEmail} is not null)`;
+
+const rulesChanged = (before: ClubCategory | undefined, after: ClubCategory) =>
+  before?.needsEmailVerification !== after.needsEmailVerification ||
+  before?.needsClubConfirmation !== after.needsClubConfirmation;
+
+// Where pending requests go under a category's rules. A coordinator who already verified a
+// request still counts, so that request never goes back to email verification.
+const nextStatuses = ({ needsEmailVerification, needsClubConfirmation }: ClubCategory) => {
+  const coordinatorVerified = needsClubConfirmation ? "Pending Club Verification" : "Approved";
+  const unverified = needsEmailVerification ? "Pending Email Verification" : coordinatorVerified;
+  return { coordinatorVerified, unverified };
+};
+
+// Moves a category's pending requests to the step its new rules call for. Approved and denied
+// requests are final. When the email step is dropped, requests still waiting on it lose their
+// coordinator, because a coordinator on a request means they verified it.
+const movePendingRequests = (category: ClubCategory) => {
+  const { categoryId, needsEmailVerification } = category;
+  const next = nextStatuses(category);
+  const unlessWaitingOnEmail = (column: typeof loggedHours.coordinatorName | typeof loggedHours.coordinatorEmail) =>
+    sql`case when ${loggedHours.status} = 'Pending Email Verification' then null else ${column} end`;
+
+  return db
+    .update(loggedHours)
+    .set({
+      status: sql`case when ${COORDINATOR_VERIFIED} then ${next.coordinatorVerified} else ${next.unverified} end`,
+      ...(needsEmailVerification
+        ? {}
+        : {
+            coordinatorName: unlessWaitingOnEmail(loggedHours.coordinatorName),
+            coordinatorEmail: unlessWaitingOnEmail(loggedHours.coordinatorEmail),
+          }),
+    })
+    .where(
+      and(
+        eq(loggedHours.categoryId, categoryId),
+        inArray(loggedHours.status, PENDING_STATUSES),
+      ),
+    );
 };
 
 //--------------------------------------------------------------------------------------//
@@ -66,12 +122,67 @@ export const getCategoryUsage = async (categoryId: number): Promise<CategoryUsag
   return { loggedHours: logged, additionalHours: additional, opportunities };
 };
 
+// What saving these categories would do to pending requests, for the confirmation before a save.
+// Only lists categories with at least one request that would change.
+export const getCategoryRequestChanges = async (
+  clubId: number,
+  categories: ClubCategory[],
+): Promise<CategoryRequestChanges[]> => {
+  const owned = new Map((await getClubCategories(clubId)).map((c) => [c.categoryId, c]));
+  const changed = categories.filter((c) => owned.has(c.categoryId) && rulesChanged(owned.get(c.categoryId), c));
+  if (changed.length === 0) return [];
+
+  const rows = await db
+    .select({
+      categoryId: loggedHours.categoryId,
+      status: loggedHours.status,
+      coordinatorVerified: COORDINATOR_VERIFIED,
+      requests: count(),
+    })
+    .from(loggedHours)
+    .where(
+      and(
+        inArray(loggedHours.categoryId, changed.map((c) => c.categoryId)),
+        inArray(loggedHours.status, PENDING_STATUSES),
+      ),
+    )
+    .groupBy(loggedHours.categoryId, loggedHours.status, COORDINATOR_VERIFIED);
+
+  return changed
+    .map((category) => {
+      const next = nextStatuses(category);
+      const changes: CategoryRequestChanges = {
+        categoryId: category.categoryId,
+        categoryName: category.categoryName.trim(),
+        total: 0,
+        toEmailVerification: 0,
+        toClubVerification: 0,
+        toApproved: 0,
+        coordinatorsCleared: 0,
+      };
+
+      for (const row of rows.filter((r) => r.categoryId === category.categoryId)) {
+        const status = row.coordinatorVerified ? next.coordinatorVerified : next.unverified;
+        if (status === row.status) continue;
+
+        changes.total += row.requests;
+        if (status === "Pending Email Verification") changes.toEmailVerification += row.requests;
+        else if (status === "Pending Club Verification") changes.toClubVerification += row.requests;
+        else changes.toApproved += row.requests;
+        if (row.status === "Pending Email Verification") changes.coordinatorsCleared += row.requests;
+      }
+      return changes;
+    })
+    .filter((changes) => changes.total > 0);
+};
+
 //--------------------------------------------------------------------------------------//
 //                                         Save                                         //
 //--------------------------------------------------------------------------------------//
 
 // Saves the whole category list for a club in one go: new rows are added, changed rows
-// updated, and `deletedIds` removed (with their member group links).
+// updated, and `deletedIds` removed (with their member group links). Pending requests in a
+// category whose verification rules changed move to match, in the same batch.
 export const saveClubCategories = async (
   clubId: number,
   categories: ClubCategory[],
@@ -129,11 +240,16 @@ export const saveClubCategories = async (
       queries.push(
         db.update(categoryData).set(values).where(and(eq(categoryData.clubId, clubId), eq(categoryData.categoryId, c.categoryId))),
       );
+
+      if (rulesChanged(owned.get(c.categoryId), c)) queries.push(movePendingRequests(c));
     }
   }
   if (queries.length > 0) {
     await db.batch(queries as [BatchItem<"pg">, ...BatchItem<"pg">[]]);
   }
+
+  // Moved requests can change the Hour Requests badge in the side nav
+  refresh();
 
   // return the saved list so new categories get their ids
   return { success: true, categories: await getClubCategories(clubId) };
