@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { connection } from "next/server";
 import StudentNavUI from "./nav";
 import { getCurrentStudent } from "@/actions/student";
+import { getMyPendingRequestCount } from "@/actions/hours";
 import "../css/shell.css";
 
 export default function StudentLayout({ children }: LayoutProps<"/student">) {
@@ -22,7 +23,12 @@ export default function StudentLayout({ children }: LayoutProps<"/student">) {
 async function StudentNavLoader() {
   // TODO: reading the session makes this request-time once auth is added
   await connection();
-  const student = await getCurrentStudent();
+  const [student, pendingRequests] = await Promise.all([getCurrentStudent(), getMyPendingRequestCount()]);
 
-  return <StudentNavUI user={student ? { fName: student.fName, lName: student.lName, role: "Student" } : null} />;
+  return (
+    <StudentNavUI
+      user={student ? { fName: student.fName, lName: student.lName, role: "Student" } : null}
+      pendingRequests={pendingRequests}
+    />
+  );
 }

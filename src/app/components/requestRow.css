@@ -1,5 +1,18 @@
 /* Request row: hour request on a ListRow (student, club and staff lists) */
 
+.request-row.list-row-selected {
+  border-left-color: var(--primaryRed);
+}
+
+.request-row-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  color: var(--primaryRed);
+}
+
 .request-row-meta {
   display: inline-flex;
   align-items: center;

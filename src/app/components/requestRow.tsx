@@ -69,6 +69,8 @@ type RequestRowProps = {
   divider?: "silver" | "blue" | "none";
   selected?: boolean;
   highlighted?: boolean;
+  /** Red line under the details when the request needs something from the viewer. */
+  notice?: React.ReactNode;
   /** Makes the row clickable (master/detail lists). */
   onSelect?: (id: HourRequest["id"]) => void;
   /** Shows Approve on pending rows ("Override Approve" while pending email verification). */
@@ -101,6 +103,7 @@ export default function RequestRow({
   divider = "silver",
   selected = false,
   highlighted = false,
+  notice,
   onSelect,
   onApprove,
   onDeny,
@@ -161,6 +164,13 @@ export default function RequestRow({
           )}
         </>
       }
-    />
+    >
+      {notice && (
+        <span className="request-row-notice">
+          <i className="bi bi-exclamation-circle-fill" aria-hidden="true" />
+          {notice}
+        </span>
+      )}
+    </ListRow>
   );
 }

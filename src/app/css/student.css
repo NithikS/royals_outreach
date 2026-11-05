@@ -252,3 +252,102 @@
 .log-hours-done-action {
   margin-top: var(--space-2);
 }
+
+/* ---------------- my requests page ---------------- */
+
+.my-requests {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.my-requests-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+@media (max-width: 480px) {
+  .my-requests-header {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+}
+
+.my-requests-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 1200px) {
+  .my-requests-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.my-requests-list {
+  border: 4px solid var(--primaryBlue);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.my-requests-list .list-row:last-child {
+  border-bottom: none;
+}
+
+.my-requests-panel .form-panel-footer > * {
+  flex: 1 1 auto;
+}
+
+.my-requests-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.my-requests-details-title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: var(--fw-bold);
+  color: var(--primaryBlue);
+  overflow-wrap: anywhere;
+}
+
+.my-requests-details .detail-list-value {
+  color: var(--textBlack);
+}
+
+.my-requests-note {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+.my-requests-callout {
+  padding: var(--space-3) 14px;
+  font-size: 13.5px;
+  color: var(--textBlack);
+  background: var(--blueTint);
+  border: 1px solid var(--blueTintBorder);
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.my-requests-callout-title {
+  margin-bottom: var(--space-1);
+  font-weight: var(--fw-bold);
+  color: var(--primaryRed);
+}
+
+.my-requests-error {
+  margin: 0;
+  font-size: 14px;
+  font-weight: var(--fw-semibold);
+  color: var(--primaryRed);
+}

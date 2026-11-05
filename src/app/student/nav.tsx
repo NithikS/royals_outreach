@@ -16,14 +16,22 @@ const STUDENT_ROUTES: Record<string, string> = {
 
 type StudentNavUIProps = {
   user: SideNavUser | null;
+  /** Shown on My Requests; no badge at zero. */
+  pendingRequests: number;
 };
 
-export default function StudentNavUI({ user }: StudentNavUIProps) {
+export default function StudentNavUI({ user, pendingRequests }: StudentNavUIProps) {
   const pathname = usePathname();
   const section = Object.keys(STUDENT_ROUTES).find((value) => STUDENT_ROUTES[value] === pathname);
 
   const ITEMS = STUDENT_NAV_ITEMS.map((item) =>
-    item.value ? { ...item, href: STUDENT_ROUTES[item.value] } : item,
+    item.value
+      ? {
+          ...item,
+          href: STUDENT_ROUTES[item.value],
+          badge: item.value === "req" && pendingRequests > 0 ? pendingRequests : undefined,
+        }
+      : item,
   );
 
   return (

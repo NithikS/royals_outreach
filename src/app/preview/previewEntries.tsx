@@ -1128,6 +1128,7 @@ export const PREVIEW_ENTRIES: PreviewEntry[] = [
       },
       { label: "Inline", props: { request: REQ_PENDING, layout: "inline" } },
       { label: "Denied Selected", props: { request: REQ_DENIED, showStudent: true, selected: true, onSelect: cb("onSelect", "(id)") } },
+      { label: "With Notice", props: { request: REQ_PENDING_EMAIL, notice: "Add Your Coordinator" } },
     ],
   }),
   entry({
