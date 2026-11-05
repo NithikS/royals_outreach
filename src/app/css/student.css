@@ -111,3 +111,144 @@
     gap: var(--space-3);
   }
 }
+
+/* ---------------- log hours page ---------------- */
+
+.log-hours {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.log-hours-body {
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Stepper: three circles on a silver line */
+.log-hours-stepper {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.log-hours-stepper::before {
+  content: "";
+  position: absolute;
+  left: 16.7%;
+  right: 16.7%;
+  top: 27px;
+  height: 3px;
+  background: var(--secondarySilver);
+}
+
+@media (max-width: 600px) {
+  .log-hours-stepper::before {
+    top: 21px;
+  }
+}
+
+.log-hours-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  color: var(--secondaryGray);
+}
+
+.log-hours-step-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--secondarySilver);
+  background: var(--white);
+  border: 4px solid var(--secondarySilver);
+  border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+  .log-hours-step-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+    border-width: 3px;
+  }
+}
+
+.log-hours-step-label {
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .log-hours-step-label {
+    font-size: 12.5px;
+  }
+}
+
+.log-hours-step-current,
+.log-hours-step-done {
+  color: var(--primaryBlue);
+}
+
+.log-hours-step-current .log-hours-step-icon {
+  color: var(--primaryBlue);
+  border-color: var(--primaryBlue);
+}
+
+.log-hours-step-done .log-hours-step-icon {
+  color: var(--white);
+  background: var(--primaryBlue);
+  border-color: var(--primaryBlue);
+}
+
+.log-hours-note {
+  margin: var(--space-2) 0 0;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--secondaryGray);
+}
+
+.log-hours-error {
+  margin: var(--space-4) 0 0;
+  font-size: 14px;
+  font-weight: var(--fw-semibold);
+  color: var(--primaryRed);
+}
+
+/* Done panel */
+.log-hours-done-icon {
+  font-size: 56px;
+  line-height: 1;
+  color: var(--primaryBlue);
+}
+
+.log-hours-done-title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(1.25rem, 2.2vw, var(--fs-2xl));
+  font-weight: var(--fw-bold);
+  color: var(--primaryBlue);
+}
+
+.log-hours-done-line {
+  margin: 0;
+  font-size: 15px;
+}
+
+.log-hours-done-action {
+  margin-top: var(--space-2);
+}

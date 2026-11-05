@@ -5,7 +5,7 @@ import ModalShell from "./ModalShell";
 import SaveButton from "./saveButton";
 import Input from "./input";
 import Select from "./select";
-import { HourRequest, HourRequestStatus } from "./requestRow";
+import { HOUR_REQUEST_STATUSES, HourRequest, HourRequestStatus } from "./requestRow";
 import "../css/components.css";
 import { fullName } from "@/lib/personName";
 
@@ -31,13 +31,13 @@ const DEFAULT_REQUEST: HourRequest = {
   category: "Service",
   date: "Oct 2",
   hours: 2,
-  status: "Pending",
+  status: "Pending Club Verification",
 };
 
 export default function EditHoursDialog({
   request = DEFAULT_REQUEST,
   categories = [],
-  statuses = ["Pending", "Approved", "Denied"],
+  statuses = HOUR_REQUEST_STATUSES,
   title = "Edit Logged Hours",
   width = "480px",
   onClose = () => {},

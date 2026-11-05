@@ -19,8 +19,8 @@ type RecentRequestsProps = {
 };
 
 const DEFAULT_REQUESTS: HourRequest[] = [
-  { id: 1, opportunity: "Park Cleanup", club: "Key Club", date: "Oct 2", hours: 2, status: "Pending" },
-  { id: 2, opportunity: "Bake Sale Setup", club: "Art Club", date: "Sep 30", hours: 1, status: "Pending" },
+  { id: 1, opportunity: "Park Cleanup", club: "Key Club", date: "Oct 2", hours: 2, status: "Pending Club Verification" },
+  { id: 2, opportunity: "Bake Sale Setup", club: "Art Club", date: "Sep 30", hours: 1, status: "Pending Club Verification" },
   { id: 3, opportunity: "Food Pantry Pack-Out", club: "Key Club", date: "Sep 27", hours: 3, status: "Approved" },
 ];
 

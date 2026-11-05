@@ -10,7 +10,23 @@ import "./requestRow.css";
 import { formatHours } from "@/lib/formatHours";
 import { fullName, type PersonName } from "@/lib/personName";
 
-export type HourRequestStatus = "Pending" | "Approved" | "Denied";
+/** Stored as-is in logged_hours.status. */
+export type HourRequestStatus =
+  | "Pending Email Verification"
+  | "Pending Club Verification"
+  | "Approved"
+  | "Denied";
+
+export const HOUR_REQUEST_STATUSES: HourRequestStatus[] = [
+  "Pending Email Verification",
+  "Pending Club Verification",
+  "Approved",
+  "Denied",
+];
+
+/** Still waiting on the coordinator or the club. */
+export const isPendingStatus = (status: HourRequestStatus) =>
+  status === "Pending Email Verification" || status === "Pending Club Verification";
 
 export type HourRequest = {
   id: string | number;
@@ -24,8 +40,6 @@ export type HourRequest = {
   fullDate?: string;
   hours: number;
   status: HourRequestStatus;
-  /** Pending and waiting on the coordinator's email verification. */
-  awaitingEmail?: boolean;
   hasPhoto?: boolean;
   organization?: string;
   coordinator?: string;
@@ -34,8 +48,9 @@ export type HourRequest = {
   denyMessage?: string;
 };
 
-export const STATUS_TONE: Record<HourRequestStatus, "pending" | "approved" | "denied"> = {
-  Pending: "pending",
+export const STATUS_TONE: Record<HourRequestStatus, "pending" | "approved" | "denied" | "info"> = {
+  "Pending Email Verification": "info",
+  "Pending Club Verification": "pending",
   Approved: "approved",
   Denied: "denied",
 };
@@ -49,16 +64,14 @@ type RequestRowProps = {
   showClub?: boolean;
   showCategory?: boolean;
   showDate?: boolean;
-  /** Pending rows waiting on a coordinator show an "Awaiting Email" badge instead of Pending. */
-  showAwaitingEmail?: boolean;
-  /** Set false to hide the Pending badge (club Pending tab, where every row is pending). */
+  /** Set false to hide the badge on pending rows (club Pending tab, where every row is pending). */
   showPendingBadge?: boolean;
   divider?: "silver" | "blue" | "none";
   selected?: boolean;
   highlighted?: boolean;
   /** Makes the row clickable (master/detail lists). */
   onSelect?: (id: HourRequest["id"]) => void;
-  /** Shows Approve on pending rows ("Override Approve" when awaiting email). */
+  /** Shows Approve on pending rows ("Override Approve" while pending email verification). */
   onApprove?: (id: HourRequest["id"]) => void;
   /** Shows Deny on pending rows. */
   onDeny?: (id: HourRequest["id"]) => void;
@@ -74,7 +87,7 @@ const DEFAULT_REQUEST: HourRequest = {
   category: "Service",
   date: "Oct 2",
   hours: 2,
-  status: "Pending",
+  status: "Pending Club Verification",
 };
 
 export default function RequestRow({
@@ -84,7 +97,6 @@ export default function RequestRow({
   showClub = true,
   showCategory = false,
   showDate = true,
-  showAwaitingEmail = false,
   showPendingBadge = true,
   divider = "silver",
   selected = false,
@@ -95,8 +107,8 @@ export default function RequestRow({
   onEdit,
   className = "",
 }: RequestRowProps) {
-  const pending = request.status === "Pending";
-  const awaiting = pending && !!request.awaitingEmail;
+  const pending = isPendingStatus(request.status);
+  const awaiting = request.status === "Pending Email Verification";
 
   const details = [
     showStudent ? request.opportunity : null,
@@ -127,12 +139,8 @@ export default function RequestRow({
       }
       trailing={
         <>
-          {awaiting && showAwaitingEmail ? (
-            <Badge tone="info">Awaiting Email</Badge>
-          ) : (
-            (!pending || showPendingBadge) && (
-              <Badge tone={STATUS_TONE[request.status]}>{request.status}</Badge>
-            )
+          {(!pending || showPendingBadge) && (
+            <Badge tone={STATUS_TONE[request.status]}>{request.status}</Badge>
           )}
           {((pending && (onApprove || onDeny)) || onEdit) && (
             <span className="request-row-actions">

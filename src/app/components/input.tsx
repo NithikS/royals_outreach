@@ -18,6 +18,8 @@ type InputProps = {
   multiline?: boolean;
   rows?: number;
   type?: string;
+  /** Number inputs only. "any" allows decimals such as 0.25. */
+  step?: number | "any";
   id?: string;
   name?: string;
   value?: string | number;
@@ -39,6 +41,7 @@ export default function Input({
   multiline = false,
   rows = 3,
   type = "text",
+  step,
   id,
   name,
   value,
@@ -92,7 +95,7 @@ export default function Input({
         {multiline ? (
           <textarea rows={rows} {...controlProps} />
         ) : (
-          <input type={type} {...controlProps} />
+          <input type={type} step={step} {...controlProps} />
         )}
         {suffix && <span className="input-field-suffix">{suffix}</span>}
       </div>

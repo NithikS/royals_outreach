@@ -7,6 +7,13 @@
   background: var(--background);
 }
 
+/* The mobile nav sits above the page, not beside it */
+@media (max-width: 768px) {
+  .shell {
+    flex-direction: column;
+  }
+}
+
 .shell-main {
   flex: 1;
   min-width: 0;

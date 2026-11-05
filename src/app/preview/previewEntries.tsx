@@ -47,7 +47,7 @@ import ChoiceCards from "../components/choiceCards";
 import FormSection, { FormSectionSpan } from "../components/formSection";
 import FilterBar from "../components/filterBar";
 import DetailList from "../components/detailList";
-import RequestRow, { type HourRequest } from "../components/requestRow";
+import RequestRow, { STATUS_TONE, type HourRequest } from "../components/requestRow";
 import RecentRequests from "../components/recentRequests";
 import HoursStatRow from "../components/hoursStatRow";
 import CategoryProgress from "../components/categoryProgress";
@@ -175,8 +175,7 @@ const REQ_PENDING_EMAIL: HourRequest = {
   date: "Oct 2",
   fullDate: "Oct 2, 2026",
   hours: 2,
-  status: "Pending",
-  awaitingEmail: true,
+  status: "Pending Email Verification",
   hasPhoto: true,
   organization: "Fishers Parks",
   coordinator: "Sam Patel",
@@ -191,7 +190,7 @@ const REQ_PENDING: HourRequest = {
   category: "Event Help",
   date: "Sep 30",
   hours: 1,
-  status: "Pending",
+  status: "Pending Club Verification",
 };
 
 const REQ_APPROVED: HourRequest = {
@@ -277,9 +276,9 @@ const LOOKUP_STUDENTS: LookupStudent[] = [
       { name: "Robotics Club", goal: 8, categories: [] },
     ],
     logs: [
-      { id: 1, opportunity: "Park Cleanup", club: "Key Club", category: "Service", date: "Oct 2", hours: 2, status: "Pending" },
+      { id: 1, opportunity: "Park Cleanup", club: "Key Club", category: "Service", date: "Oct 2", hours: 2, status: "Pending Club Verification" },
       { id: 2, opportunity: "Food Pantry Pack-Out", club: "Key Club", category: "Service", date: "Sep 27", hours: 3, status: "Approved" },
-      { id: 3, opportunity: "Bake Sale Setup", club: "Art Club", category: "Event Help", date: "Sep 30", hours: 1, status: "Pending" },
+      { id: 3, opportunity: "Bake Sale Setup", club: "Art Club", category: "Event Help", date: "Sep 30", hours: 1, status: "Pending Club Verification" },
       { id: 4, opportunity: "Welcome Week Greeter", club: "Art Club", category: "Event Help", date: "Sep 13", hours: 3, status: "Approved" },
       { id: 5, opportunity: "Robotics Camp Helper", club: "Robotics Club", category: "General Hours", date: "Sep 20", hours: 1, status: "Denied" },
     ],
@@ -298,7 +297,7 @@ const LOOKUP_STUDENTS: LookupStudent[] = [
     logs: [
       { id: 6, opportunity: "Canned Food Drive", club: "National Honor Society", category: "Service", date: "Oct 4", hours: 4, status: "Approved" },
       { id: 7, opportunity: "Tutoring Night", club: "National Honor Society", category: "Tutoring", date: "Sep 22", hours: 2, status: "Approved" },
-      { id: 8, opportunity: "Mural Painting", club: "Art Club", category: "Event Help", date: "Sep 18", hours: 2, status: "Pending" },
+      { id: 8, opportunity: "Mural Painting", club: "Art Club", category: "Event Help", date: "Sep 18", hours: 2, status: "Pending Club Verification" },
     ],
   },
   {
@@ -314,7 +313,7 @@ const LOOKUP_STUDENTS: LookupStudent[] = [
     ],
     logs: [
       { id: 9, opportunity: "Robot Build Day", club: "Robotics Club", category: "General Hours", date: "Oct 1", hours: 5, status: "Approved" },
-      { id: 10, opportunity: "Tutoring Night", club: "National Honor Society", category: "Tutoring", date: "Sep 22", hours: 2, status: "Pending" },
+      { id: 10, opportunity: "Tutoring Night", club: "National Honor Society", category: "Tutoring", date: "Sep 22", hours: 2, status: "Pending Club Verification" },
     ],
   },
 ];
@@ -353,12 +352,12 @@ type TableRow = { id: number; fName: string; lName: string; club: string; hours:
 
 const TABLE_ROWS: TableRow[] = [
   { id: 1, fName: "Katara", lName: "Lopez", club: "National Honor Society", hours: 18, status: "Approved" },
-  { id: 2, fName: "Aang", lName: "Smith", club: "Key Club", hours: 6, status: "Pending" },
+  { id: 2, fName: "Aang", lName: "Smith", club: "Key Club", hours: 6, status: "Pending Club Verification" },
   { id: 3, fName: "Sokka", lName: "Reed", club: "Robotics Club", hours: 5, status: "Approved" },
   { id: 4, fName: "Zuko", lName: "Hale", club: "Robotics Club", hours: 1, status: "Denied" },
 ];
 
-const TONE = { Pending: "pending", Approved: "approved", Denied: "denied" } as const;
+const TONE = STATUS_TONE;
 
 // ================= Entries =================
 
@@ -1122,7 +1121,6 @@ export const PREVIEW_ENTRIES: PreviewEntry[] = [
           request: REQ_PENDING_EMAIL,
           showStudent: true,
           showCategory: true,
-          showAwaitingEmail: true,
           onApprove: cb("onApprove", "(id)"),
           onDeny: cb("onDeny", "(id)"),
           onEdit: cb("onEdit", "(id)"),

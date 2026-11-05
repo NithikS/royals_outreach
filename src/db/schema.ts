@@ -1,5 +1,9 @@
-import { pgTable, integer, text, boolean, date, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, integer, numeric, text, boolean, date, uniqueIndex } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
+
+// Hours allow quarter, half and tenth hours (0.25, 0.5, 0.6), so they are stored as
+// numeric(6, 2) and read back as JS numbers.
+const hoursColumn = () => numeric("hours", { precision: 6, scale: 2, mode: "number" });
 
 // ============================================================
 //  USERS
@@ -149,7 +153,7 @@ export const loggedHours = pgTable("logged_hours", {
   clubId:           integer("club_id").references(() => clubData.clubId),
   opportunityName:  text("opportunity_name"),
   date:             date("date"),
-  hours:            integer("hours"),
+  hours:            hoursColumn(),
   categoryId:       integer("category_id").references(() => categoryData.categoryId),
   orgName:          text("org_name"),
   coordinatorName:  text("coordinator_name"),
@@ -165,7 +169,7 @@ export const additionalHours = pgTable("additional_hours", {
   num:        integer("num").primaryKey().generatedAlwaysAsIdentity(),
   studentId:  integer("student_id").references(() => studentUserData.studentId),
   clubId:     integer("club_id").references(() => clubData.clubId),
-  hours:      integer("hours"),
+  hours:      hoursColumn(),
   categoryId: integer("category_id").references(() => categoryData.categoryId),
 });
 
@@ -183,7 +187,7 @@ export const signUps = pgTable("sign_ups", {
   startTime:       text("start_time"),
   endTime:         text("end_time"),
   slots:           integer("slots"),
-  hours:           integer("hours"),
+  hours:           hoursColumn(),
   slotsPerStudent: integer("slots_per_student"),
 });
 

@@ -13,7 +13,7 @@ import ProgressBar from "./progressBar";
 import ListRow from "./listRow";
 import EmptyState from "./emptyState";
 import EditHoursDialog from "./EditHoursDialog";
-import { HourRequest, STATUS_TONE } from "./requestRow";
+import { HourRequest, STATUS_TONE, isPendingStatus } from "./requestRow";
 import "./studentLookup.css";
 import { formatHours } from "@/lib/formatHours";
 import { plural } from "@/lib/plural";
@@ -79,9 +79,9 @@ const DEFAULT_STUDENTS: LookupStudent[] = [
       { name: "Robotics Club", goal: 8, categories: [] },
     ],
     logs: [
-      { id: 1, opportunity: "Park Cleanup", club: "Key Club", category: "Service", date: "Oct 2", hours: 2, status: "Pending" },
+      { id: 1, opportunity: "Park Cleanup", club: "Key Club", category: "Service", date: "Oct 2", hours: 2, status: "Pending Club Verification" },
       { id: 2, opportunity: "Food Pantry Pack-Out", club: "Key Club", category: "Service", date: "Sep 27", hours: 3, status: "Approved" },
-      { id: 3, opportunity: "Bake Sale Setup", club: "Art Club", category: "Event Help", date: "Sep 30", hours: 1, status: "Pending" },
+      { id: 3, opportunity: "Bake Sale Setup", club: "Art Club", category: "Event Help", date: "Sep 30", hours: 1, status: "Pending Club Verification" },
       { id: 4, opportunity: "Welcome Week Greeter", club: "Art Club", category: "Event Help", date: "Sep 13", hours: 3, status: "Approved" },
       { id: 5, opportunity: "Robotics Camp Helper", club: "Robotics Club", category: "General Hours", date: "Sep 20", hours: 1, status: "Denied" },
     ],
@@ -100,7 +100,7 @@ const DEFAULT_STUDENTS: LookupStudent[] = [
     logs: [
       { id: 6, opportunity: "Canned Food Drive", club: "National Honor Society", category: "Service", date: "Oct 4", hours: 4, status: "Approved" },
       { id: 7, opportunity: "Tutoring Night", club: "National Honor Society", category: "Tutoring", date: "Sep 22", hours: 2, status: "Approved" },
-      { id: 8, opportunity: "Mural Painting", club: "Art Club", category: "Event Help", date: "Sep 18", hours: 2, status: "Pending" },
+      { id: 8, opportunity: "Mural Painting", club: "Art Club", category: "Event Help", date: "Sep 18", hours: 2, status: "Pending Club Verification" },
     ],
   },
   {
@@ -228,7 +228,7 @@ function StudentDetail({
   const scopedClub = clubs[0];
 
   const approved = sumHours(logs, (l) => l.status === "Approved");
-  const pending = sumHours(logs, (l) => l.status === "Pending");
+  const pending = sumHours(logs, (l) => isPendingStatus(l.status));
   const denied = sumHours(logs, (l) => l.status === "Denied");
 
   const earnedIn = (name: string, category?: string) =>
