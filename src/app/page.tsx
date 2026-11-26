@@ -28,18 +28,35 @@ const STATS = [
 ];
 
 const WHY = [
-  { value: "58%", text: "of admissions leaders say community service has a positive impact on acceptance." },
-  { value: "53%", text: "say it is used as a tie breaker between equally qualified applicants." },
+  {
+    value: "58%",
+    text: "of admissions leaders say community service has a positive impact on acceptance.",
+  },
+  {
+    value: "53%",
+    text: "say it is used as a tie breaker between equally qualified applicants.",
+  },
 ];
 
 const ROLES = [
   {
     title: "Students",
     number: "01",
-    points: ["Log hours in a minute", "Track your club goals", "Export a portfolio for college"],
+    points: [
+      "Log hours in a minute",
+      "Track your club goals",
+      "Export a portfolio for college",
+    ],
     preview: (
       <div className="home-role-preview home-role-preview-row">
-        <ProgressRing value={17} goal={25} size={96} thickness={10} label="17" sublabel="of 25 hrs" />
+        <ProgressRing
+          value={17}
+          goal={25}
+          size={112}
+          thickness={10}
+          label="17"
+          sublabel="of 25 hrs"
+        />
         <div className="home-role-preview-bars">
           <ProgressBar label="Key Club" value={12} goal={15} height={10} />
           <ProgressBar label="NHS" value={5} goal={10} height={10} />
@@ -50,7 +67,11 @@ const ROLES = [
   {
     title: "Club Execs",
     number: "02",
-    points: ["Approve hour requests", "Scan IDs for event attendance", "Post opportunities with sign ups"],
+    points: [
+      "Approve hour requests",
+      "Scan IDs for event attendance",
+      "Post opportunities with sign ups",
+    ],
     preview: (
       <div className="home-role-preview">
         <div className="home-role-request">
@@ -67,10 +88,19 @@ const ROLES = [
   {
     title: "Sponsors",
     number: "03",
-    points: ["See school wide reports", "Look up any student", "Export anything to Excel"],
+    points: [
+      "See school wide reports",
+      "Look up any student",
+      "Export anything to Excel",
+    ],
     preview: (
       <div className="home-role-preview">
-        <ProgressBar label="National Honor Society" value={4210} goal={5000} height={10} />
+        <ProgressBar
+          label="National Honor Society"
+          value={4210}
+          goal={5000}
+          height={10}
+        />
         <ProgressBar label="Key Club" value={3385} goal={5000} height={10} />
       </div>
     ),
@@ -139,7 +169,6 @@ export default function HomePage() {
       <main>
         {/* Hero */}
         <section className="home-hero">
-          <div className="home-hero-circle" aria-hidden="true" />
           <div className="home-hero-inner">
             <div className="home-hero-text">
               <p className="home-label">Hamilton Southeastern High School</p>
@@ -149,8 +178,8 @@ export default function HomePage() {
                 give <span className="home-hero-title-red">back.</span>
               </h1>
               <p className="home-hero-lead">
-                Log your service hours, get them approved by your club, and help HSE build its biggest year of
-                service yet.
+                Log your service hours, get them approved by your club, and help
+                HSE build its biggest year of service yet.
               </p>
               <div className="home-buttons">
                 <Link href="/login" className="home-btn home-btn-red">
@@ -166,6 +195,7 @@ export default function HomePage() {
               </Suspense>
             </div>
             <div className="home-hero-logo-wrap">
+              <div className="home-hero-circle" aria-hidden="true" />
               <Image
                 src={royalsOutreachLogo}
                 alt="Royals Outreach logo"
@@ -178,7 +208,11 @@ export default function HomePage() {
         </section>
 
         {/* Our Impact This Year */}
-        <section id="impact" className="home-section" aria-labelledby="impact-title">
+        <section
+          id="impact"
+          className="home-section"
+          aria-labelledby="impact-title"
+        >
           <p className="home-label">Season Stats</p>
           <h2 id="impact-title" className="home-h2">
             Our impact this year
@@ -189,7 +223,11 @@ export default function HomePage() {
         </section>
 
         {/* Why It Matters */}
-        <section id="why-it-matters" className="home-why" aria-labelledby="why-title">
+        <section
+          id="why-it-matters"
+          className="home-why"
+          aria-labelledby="why-title"
+        >
           <div className="home-why-inner">
             <div>
               <p className="home-label">Why It Matters</p>
@@ -197,10 +235,12 @@ export default function HomePage() {
                 Service hours matter after graduation
               </h2>
               <p className="home-why-text">
-                In a 2018 survey of 264 college admissions leaders, service experience carried real weight in who
-                gets accepted.
+                In a 2018 survey of 264 college admissions leaders, service
+                experience carried real weight in who gets accepted.
               </p>
-              <p className="home-why-source">Source: Newton, D. (2018). Forbes.</p>
+              <p className="home-why-source">
+                Source: Newton, D. (2018). Forbes.
+              </p>
             </div>
             <div className="home-why-facts">
               {WHY.map((fact) => (
@@ -214,7 +254,11 @@ export default function HomePage() {
         </section>
 
         {/* Built For Every Royal */}
-        <section id="features" className="home-section" aria-labelledby="features-title">
+        <section
+          id="features"
+          className="home-section"
+          aria-labelledby="features-title"
+        >
           <p className="home-label">The Roster</p>
           <h2 id="features-title" className="home-h2">
             Built for every Royal
@@ -243,14 +287,21 @@ export default function HomePage() {
         </section>
 
         {/* How It Works */}
-        <section id="how-it-works" className="home-section" aria-labelledby="how-title">
+        <section
+          id="how-it-works"
+          className="home-section"
+          aria-labelledby="how-title"
+        >
           <p className="home-label">The Play</p>
           <h2 id="how-title" className="home-h2">
             How it works
           </h2>
           <ol className="home-steps">
             {STEPS.map((step, i) => (
-              <li key={step.title} className={`home-step ${step.red ? "home-step-red" : ""}`.trim()}>
+              <li
+                key={step.title}
+                className={`home-step ${step.red ? "home-step-red" : ""}`.trim()}
+              >
                 <div className="home-step-top">
                   <span className="home-step-icon" aria-hidden="true">
                     <i className={`bi bi-${step.icon}`} />
@@ -266,7 +317,11 @@ export default function HomePage() {
         </section>
 
         {/* Made At HSE */}
-        <section id="made-at-hse" className="home-section home-made-section" aria-labelledby="made-title">
+        <section
+          id="made-at-hse"
+          className="home-section home-made-section"
+          aria-labelledby="made-title"
+        >
           <div className="home-made">
             <div className="home-made-stripe" aria-hidden="true" />
             {/* TODO: add photo (swap this placeholder for next/image with fill and object-fit: cover) */}
@@ -275,20 +330,30 @@ export default function HomePage() {
               Photo
             </div>
             <div className="home-made-body">
-              <p className="home-label home-made-label">Made At HSE</p>
+              {/* <p className="home-label home-made-label">Made At HSE</p> */}
               <h2 id="made-title" className="home-made-title">
                 <span className="home-made-by">Made by</span>
                 Nithik Sajja
               </h2>
               <p className="home-made-text">
-                Built in HSE&apos;s <b>Software Development Capstone</b> class, where students team up to build real
-                apps for real clients.
+                Built in HSE&apos;s <b>Software Development Capstone</b> class,
+                where students team up to build real apps for real clients.
               </p>
               <div className="home-buttons">
-                <a className="home-btn home-btn-red" href="https://nithiksajja.com" target="_blank" rel="noopener">
+                <a
+                  className="home-btn home-btn-red"
+                  href="https://nithiksajja.com"
+                  target="_blank"
+                  rel="noopener"
+                >
                   nithiksajja.com
                 </a>
-                <a className="home-btn home-btn-white" href="https://cs.hseapps.org" target="_blank" rel="noopener">
+                <a
+                  className="home-btn home-btn-white"
+                  href="https://cs.hseapps.org"
+                  target="_blank"
+                  rel="noopener"
+                >
                   About The Class
                 </a>
               </div>
@@ -315,7 +380,9 @@ export default function HomePage() {
         ]}
         bottom={
           <div className="home-footer-strip">
-            <span>Royals Outreach · Hamilton Southeastern High School · Fishers, IN</span>
+            <span>
+              Royals Outreach · Hamilton Southeastern High School · Fishers, IN
+            </span>
             <span>
               Built by{" "}
               <a href="https://nithiksajja.com" target="_blank" rel="noopener">
@@ -353,14 +420,22 @@ async function HeroCounts() {
   return <HeroCountLines clubs={stats.clubs} students={stats.students} />;
 }
 
-function HeroCountLines({ clubs, students }: { clubs: string; students: string }) {
+function HeroCountLines({
+  clubs,
+  students,
+}: {
+  clubs: string;
+  students: string;
+}) {
   return (
     <div className="home-hero-counts">
       <span>
-        <i className="bi bi-building" aria-hidden="true" /> {clubs} clubs and honor societies
+        <i className="bi bi-building" aria-hidden="true" /> {clubs} clubs and
+        honor societies
       </span>
       <span>
-        <i className="bi bi-people-fill" aria-hidden="true" /> {students} students serving
+        <i className="bi bi-people-fill" aria-hidden="true" /> {students}{" "}
+        students serving
       </span>
     </div>
   );
@@ -368,7 +443,11 @@ function HeroCountLines({ clubs, students }: { clubs: string; students: string }
 
 async function SchoolStats() {
   const stats = await getHomeStats();
-  return <StatBoxes values={[stats.totalHours, stats.students, stats.clubs, stats.thisMonth]} />;
+  return (
+    <StatBoxes
+      values={[stats.totalHours, stats.students, stats.clubs, stats.thisMonth]}
+    />
+  );
 }
 
 function StatBoxes({ values }: { values: string[] }) {
@@ -392,7 +471,9 @@ function StatValue({ value }: { value: string }) {
   return (
     <>
       {number}
-      {unit.length > 0 && <span className="home-stat-unit"> {unit.join(" ")}</span>}
+      {unit.length > 0 && (
+        <span className="home-stat-unit"> {unit.join(" ")}</span>
+      )}
     </>
   );
 }

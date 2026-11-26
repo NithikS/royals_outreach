@@ -146,35 +146,6 @@
   background: var(--white);
 }
 
-/* Light blue circle that bleeds off the right edge behind the logo */
-.home-hero-circle {
-  position: absolute;
-  top: -120px;
-  right: max(-180px, calc((100% - var(--content-max)) / 2 - 180px));
-  width: 760px;
-  height: 760px;
-  border-radius: 50%;
-  background: var(--blueHover);
-}
-
-@media (max-width: 900px) {
-  .home-hero-circle {
-    top: -200px;
-    right: 50%;
-    width: 520px;
-    height: 520px;
-    transform: translateX(50%);
-  }
-}
-
-@media (max-width: 480px) {
-  .home-hero-circle {
-    top: -170px;
-    width: 400px;
-    height: 400px;
-  }
-}
-
 .home-hero-inner {
   position: relative;
   display: grid;
@@ -200,6 +171,8 @@
 }
 
 .home-hero-text {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
@@ -253,8 +226,43 @@
 }
 
 .home-hero-logo-wrap {
+  position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+/* Light blue circle centered on the logo; the hero clips it where it bleeds off the edge */
+.home-hero-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 760px;
+  height: 760px;
+  border-radius: 50%;
+  background: var(--blueHover);
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 1024px) {
+  .home-hero-circle {
+    width: 620px;
+    height: 620px;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-hero-circle {
+    width: 440px;
+    height: 440px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-hero-circle {
+    width: 340px;
+    height: 340px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -264,6 +272,7 @@
 }
 
 .home-hero-logo {
+  position: relative;
   width: 440px;
   max-width: 100%;
   height: auto;
@@ -546,7 +555,8 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-5);
-  margin-top: 36px;
+  margin: 36px 0 0;
+  padding: 0;
   list-style: none;
 }
 
